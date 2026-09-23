@@ -1,0 +1,204 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "575857f5-25c0-4ff3-9d18-3d1fc03a7078",
+  "Metadata": {
+    "entryPointPosition": {
+      "x": 26.4,
+      "y": 42.4
+    },
+    "ActionMetadata": {
+      "95e06622-bf7b-485c-8bfb-d466e4226497": {
+        "position": {
+          "x": 349.6,
+          "y": 21.6
+        },
+        "children": [
+          "e975d95a-59b3-4706-be94-df57264eff20"
+        ],
+        "parameters": {
+          "OrchestrationAIAgentConfiguration": {
+            "AgentAssistanceAgentVersionArn": {
+              "useAIAgentDropdown": true,
+              "aiAgentName": "blog-agent"
+            }
+          }
+        },
+        "fragments": {
+          "SetContactData": "e975d95a-59b3-4706-be94-df57264eff20"
+        },
+        "useAIAgentDropdown": true,
+        "aiAgentName": "blog-agent"
+      },
+      "e975d95a-59b3-4706-be94-df57264eff20": {
+        "position": {
+          "x": 349.6,
+          "y": 21.6
+        },
+        "dynamicParams": []
+      },
+      "575857f5-25c0-4ff3-9d18-3d1fc03a7078": {
+        "position": {
+          "x": 123.2,
+          "y": 41.6
+        }
+      },
+      "ac974e68-ac0e-49ed-9334-aecd8bc538da": {
+        "position": {
+          "x": 1044.8,
+          "y": 23.2
+        }
+      },
+      "34af6f4c-bde4-4e43-9487-2001204a2517": {
+        "position": {
+          "x": 815.2,
+          "y": 17.6
+        },
+        "parameters": {
+          "QueueId": {
+            "displayName": "BasicQueue"
+          }
+        },
+        "queue": {
+          "text": "BasicQueue"
+        }
+      },
+      "86c1ffc6-c080-423e-a845-652ac951c4a7": {
+        "position": {
+          "x": 876,
+          "y": 272
+        }
+      },
+      "12268dd6-fc98-4d90-96b0-a151d52d3033": {
+        "position": {
+          "x": 587.2,
+          "y": 26.4
+        },
+        "parameters": {
+          "LambdaFunctionARN": {
+            "displayName": "blog-function"
+          }
+        },
+        "dynamicMetadata": {
+          "region": false
+        }
+      }
+    },
+    "Annotations": [],
+    "name": "blog-flow",
+    "description": "",
+    "type": "contactFlow",
+    "status": "PUBLISHED",
+    "hash": {}
+  },
+  "Actions": [
+    {
+      "Parameters": {
+        "WisdomAssistantArn": "arn:aws:wisdom:us-west-2:528757830178:assistant/9c7f20c5-7b40-4748-8349-515fbf894225",
+        "OrchestrationAIAgentConfiguration": {
+          "AgentAssistanceAgentVersionArn": "arn:aws:wisdom:us-west-2:528757830178:ai-agent/9c7f20c5-7b40-4748-8349-515fbf894225/7b4f7444-0588-443b-bd33-58fe35899b9b:$LATEST"
+        }
+      },
+      "Identifier": "95e06622-bf7b-485c-8bfb-d466e4226497",
+      "Type": "CreateWisdomSession",
+      "Transitions": {
+        "NextAction": "e975d95a-59b3-4706-be94-df57264eff20",
+        "Errors": [
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "WisdomSessionArn": "$.Wisdom.SessionArn"
+      },
+      "Identifier": "e975d95a-59b3-4706-be94-df57264eff20",
+      "Type": "UpdateContactData",
+      "Transitions": {
+        "NextAction": "12268dd6-fc98-4d90-96b0-a151d52d3033",
+        "Errors": [
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "FlowLoggingBehavior": "Enabled"
+      },
+      "Identifier": "575857f5-25c0-4ff3-9d18-3d1fc03a7078",
+      "Type": "UpdateFlowLoggingBehavior",
+      "Transitions": {
+        "NextAction": "95e06622-bf7b-485c-8bfb-d466e4226497"
+      }
+    },
+    {
+      "Parameters": {},
+      "Identifier": "ac974e68-ac0e-49ed-9334-aecd8bc538da",
+      "Type": "TransferContactToQueue",
+      "Transitions": {
+        "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+        "Errors": [
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "QueueAtCapacity"
+          },
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "QueueId": "arn:aws:connect:us-west-2:528757830178:instance/48ed37f4-7b09-4069-89b3-5a6cb8c32da2/queue/8d19a1dd-64bb-471e-a580-17719b47fb6e"
+      },
+      "Identifier": "34af6f4c-bde4-4e43-9487-2001204a2517",
+      "Type": "UpdateContactTargetQueue",
+      "Transitions": {
+        "NextAction": "ac974e68-ac0e-49ed-9334-aecd8bc538da",
+        "Errors": [
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {},
+      "Identifier": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+      "Type": "DisconnectParticipant",
+      "Transitions": {}
+    },
+    {
+      "Parameters": {
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:528757830178:function:blog-function",
+        "InvocationTimeLimitSeconds": "8",
+        "InvocationType": "SYNCHRONOUS",
+        "LambdaInvocationAttributes": {
+          "region": "europe"
+        },
+        "ResponseValidation": {
+          "ResponseType": "STRING_MAP"
+        }
+      },
+      "Identifier": "12268dd6-fc98-4d90-96b0-a151d52d3033",
+      "Type": "InvokeLambdaFunction",
+      "Transitions": {
+        "NextAction": "34af6f4c-bde4-4e43-9487-2001204a2517",
+        "Errors": [
+          {
+            "NextAction": "86c1ffc6-c080-423e-a845-652ac951c4a7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    }
+  ]
+}

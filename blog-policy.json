@@ -1,0 +1,19 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Action": [
+				"connect:DescribeContact",
+				"wisdom:UpdateSessionData",
+				"wisdom:GetSession",
+				"wisdom:UpdateSession"
+			],
+			"Resource": [
+				"arn:aws:connect:*:<account number>:instance/*/contact/*",
+				"arn:aws:wisdom:*:<account number>:session/*/*"
+			]
+		}
+	]
+}
