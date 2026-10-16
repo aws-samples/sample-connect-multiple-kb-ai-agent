@@ -1,11 +1,20 @@
-## My Project
+## AcmePets Blog
 
-TODO: Fill this README out!
+The repository contains the following items
 
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
+* Knowledge Base Content
+  * Cat Breeds of the World.pdf
+  * Cat Vaccinations - America.docx
+  * Cat Vaccinations - Europe.docx
+  * Dog Breeds of the World.pdf
+  * Dog Vaccinations - America.docx
+  * Dog Vaccinations - Europe.docx
+* Connect Customer Contact Flow
+  * blog-flow.json
+* IAM Policy
+  * blog-policy.json
+* Lambda Function Code
+  * lambda_function.json
 
 ## Security
 
